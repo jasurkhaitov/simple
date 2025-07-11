@@ -42,7 +42,12 @@ export default function Register() {
 
 			navigate('/login')
 		} catch (error) {
-			toast.error(error.data.detail)
+			if (typeof error === 'object' && error !== null && 'data' in error) {
+				const errData = error as { data: { detail: string } }
+				toast.error(errData.data.detail)
+			} else {
+				toast.error('An unknown error occurred.')
+			}
 		}
 	}
 

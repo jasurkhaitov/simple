@@ -53,15 +53,12 @@ const CreateSessionCard = () => {
 			})
 
 			dispatch(setActiveSessionId(result.session_id))
-		} catch (err) {
-			console.log(err)
-
-			if (toastId) {
-				toast.error('Failed to create session', {
-					id: toastId,
-				})
+		} catch (error) {
+			if (typeof error === 'object' && error !== null && 'data' in error) {
+				const errData = error as { data: { detail: string } }
+				toast.error(errData.data.detail)
 			} else {
-				toast.error(err?.data?.detail)
+				toast.error('An unknown error occurred.')
 			}
 		}
 	}
