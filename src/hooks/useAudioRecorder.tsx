@@ -14,32 +14,25 @@ export const useAudioRecorder = () => {
 	const recordingIntervalRef = useRef<NodeJS.Timeout | null>(null)
 	const chunksRef = useRef<Blob[]>([])
 
-	// Check permission status using the Permissions API
 	const checkPermissionStatus = async () => {
 		try {
-			// Check if Permissions API is available
 			if ('permissions' in navigator) {
 				const permissionStatus = await navigator.permissions.query({
 					name: 'microphone' as PermissionName,
 				})
 
-				// Update permission state based on current status
 				if (permissionStatus.state === 'granted') {
 					setHasPermission(true)
 				} else if (permissionStatus.state === 'denied') {
 					setHasPermission(false)
 				} else {
-					// If prompt, we'll need to request permission
 					setHasPermission(null)
 				}
 
-				// Listen for permission changes
 				permissionStatus.addEventListener('change', () => {
 					setHasPermission(permissionStatus.state === 'granted')
 				})
 			} else {
-				// Fallback for browsers without Permissions API
-				// Try to access the microphone briefly to check permission
 				try {
 					const stream = await (
 						navigator as Navigator
@@ -71,10 +64,8 @@ export const useAudioRecorder = () => {
 
 	const startRecording = async () => {
 		try {
-			// Request microphone access
 			const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
 
-			// Update permission status on successful access
 			setHasPermission(true)
 
 			const mediaRecorder = new MediaRecorder(stream)
@@ -105,7 +96,6 @@ export const useAudioRecorder = () => {
 			console.error('Error starting recording:', error)
 			setHasPermission(false)
 
-			// Provide more specific error messages
 			if (error instanceof DOMException) {
 				if (error.name === 'NotAllowedError') {
 					alert(
@@ -163,7 +153,6 @@ export const useAudioRecorder = () => {
 		}
 	}
 
-	// Add audio event handlers
 	useEffect(() => {
 		const audio = audioRef.current
 		if (audio) {

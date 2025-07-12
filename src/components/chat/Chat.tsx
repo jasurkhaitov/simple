@@ -144,7 +144,6 @@ export default function Chat() {
 				return
 			}
 
-			// Validate that we have either text or audio
 			if (!messageData.text && !messageData.audioFile) {
 				console.error('No message content to send')
 				toast.error('Please enter a message or record audio')
@@ -167,27 +166,26 @@ export default function Chat() {
 				}).unwrap()
 
 				console.log('Message sent successfully:', response)
-				
-				// Force refetch to get the latest messages
+
 				await refetch()
-				
+
 				toast.success('Message sent successfully')
-			} catch (error: any) {
-				console.error('Failed to send message:', error)
-				
-				// Handle different error structures
+			} catch (err) {
+				const error = err as {
+					data?: { detail?: string; message?: string }
+					message?: string
+				}
+
 				let errorMessage = 'Failed to send message'
-				
+
 				if (error?.data?.detail) {
 					errorMessage = error.data.detail
 				} else if (error?.data?.message) {
 					errorMessage = error.data.message
 				} else if (error?.message) {
 					errorMessage = error.message
-				} else if (typeof error === 'string') {
-					errorMessage = error
 				}
-				
+
 				toast.error(errorMessage)
 			}
 		},
@@ -209,15 +207,20 @@ export default function Chat() {
 	return (
 		<div className='h-screen hide-scrollbar bg-background flex flex-col'>
 			<div className='border-b bg-background/80 backdrop-blur-md flex-shrink-0 z-50'>
-				<div className='flex items-center justify-between p-4'>
+				<div className='flex items-center justify-between p-3 sm:p-4'>
 					<Link to='/dashboard'>
-						<Button variant='outline' size='icon'>
+						<Button
+							variant='outline'
+							size='icon'
+							className='h-9 w-9 sm:h-10 sm:w-10'
+						>
 							<ArrowLeft className='h-4 w-4' />
 						</Button>
 					</Link>
 					<ModeToggle />
 				</div>
 			</div>
+
 			<div className='flex-1 overflow-hidden'>
 				<ChatMessages
 					messages={messages}
@@ -226,6 +229,7 @@ export default function Chat() {
 					isTyping={isTyping}
 				/>
 			</div>
+
 			<div className='flex-shrink-0 border-t bg-background'>
 				<ChatInput
 					currentUser={currentUserFromCheckMe}

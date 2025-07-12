@@ -26,10 +26,7 @@ export const AudioPreview = ({
 	isSending,
 	hasValidSessionId,
 }: AudioPreviewProps) => {
-	const handleAudioEnded = () => {
-		// Reset playing state when audio ends
-		// This should be handled in the parent component's audio hook
-	}
+	const handleAudioEnded = () => {}
 
 	return (
 		<div className='mb-4 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg'>

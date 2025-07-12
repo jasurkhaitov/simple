@@ -76,68 +76,68 @@ const MessageBubble = memo(
 
 		return (
 			<div
-				className={`group flex items-start space-x-3 mb-6 transition-all duration-200 hover:bg-muted/30 -mx-2 px-2 py-2 rounded-lg ${
+				className={`group flex items-start space-x-2 sm:space-x-3 mb-4 sm:mb-6 transition-all duration-200 hover:bg-muted/70 -mx-2 px-2 py-2 rounded-lg ${
 					isCurrentUser ? 'flex-row-reverse space-x-reverse' : ''
 				}`}
 			>
-				<div className='relative'>
-					<Avatar className='h-12 w-12 flex-shrink-0 ring-2 ring-background shadow-lg'>
+				<div className='relative hidden xs:block flex-shrink-0'>
+					<Avatar className='h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 ring-2 ring-background shadow-lg'>
 						<AvatarImage src={avatarUrl} />
 						<AvatarFallback
-							className={
+							className={`text-xs sm:text-sm ${
 								isCurrentUser
 									? 'bg-gradient-to-br from-blue-500 to-purple-600 text-white font-semibold'
 									: 'bg-gradient-to-br from-green-500 to-emerald-600 text-white font-semibold'
-							}
+							}`}
 						>
 							{sender.name?.[0] || 'U'}
 							{sender.surname?.[0] || ''}
 						</AvatarFallback>
 					</Avatar>
 
-					<div className='absolute -bottom-0 -right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-background shadow-sm'></div>
+					<div className='absolute -bottom-0 -right-0 w-2 h-2 sm:w-3 sm:h-3 bg-green-500 rounded-full border-2 border-background shadow-sm'></div>
 				</div>
 
 				<div
-					className={`max-w-xs lg:max-w-md xl:max-w-lg ${
+					className={`flex-1 max-w-[calc(100vw-120px)] sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg ${
 						isCurrentUser ? 'items-end' : 'items-start'
 					} flex flex-col space-y-1`}
 				>
 					<div
-						className={`flex items-center space-x-2 ${
+						className={`flex items-center space-x-2 flex-wrap ${
 							isCurrentUser ? 'flex-row-reverse space-x-reverse' : ''
 						}`}
 					>
-						<span className='text-sm font-semibold text-foreground'>
+						<span className='text-xs sm:text-sm font-semibold text-foreground truncate'>
 							{sender.name} {sender.surname}
 						</span>
-						<Badge variant='outline' className='text-xs'>
+						<Badge variant='outline' className='text-xs flex-shrink-0'>
 							{formatDate(message.timestamp)}
 						</Badge>
 					</div>
 
 					<Card
-						className={`px-4 py-3 min-w-sm shadow-md border-0 transition-all duration-200 hover:shadow-lg ${
+						className={`px-3 py-2 sm:px-4 sm:py-3 w-[200px] xs:w-xs min-w-0 shadow-md border-0 transition-all duration-200 hover:shadow-lg ${
 							isCurrentUser
 								? 'bg-gradient-to-br from-blue-600 via-blue-700 to-purple-700 text-white'
 								: 'bg-card text-card-foreground border border-border/50'
 						}`}
 					>
-						<div>
-							<p className='text-sm font-medium leading-relaxed'>
+						<div className='min-w-0'>
+							<p className='text-sm sm:text-base font-medium leading-relaxed break-words'>
 								{message.originalText}
 							</p>
 						</div>
 
 						<div
-							className={`pt-2 ${
+							className={`pt-2 mt-2 ${
 								isCurrentUser
 									? 'border-t border-white/10'
 									: 'border-t border-border/30'
 							}`}
 						>
 							<div className='flex items-center space-x-1 mb-1'>
-								<Languages className='w-3 h-3 opacity-60' />
+								<Languages className='w-3 h-3 opacity-60 flex-shrink-0' />
 								<span
 									className={`text-xs ${
 										isCurrentUser
@@ -149,7 +149,7 @@ const MessageBubble = memo(
 								</span>
 							</div>
 							<p
-								className={`text-xs leading-relaxed ${
+								className={`text-xs sm:text-sm leading-relaxed break-words ${
 									isCurrentUser ? 'text-blue-100/90' : 'text-muted-foreground'
 								}`}
 							>
@@ -159,14 +159,14 @@ const MessageBubble = memo(
 
 						{message.audioUrl && (
 							<div
-								className={`pt-3 mt-3 ${
+								className={`pt-2 mt-2 sm:pt-3 sm:mt-3 ${
 									isCurrentUser
 										? 'border-t border-white/20'
 										: 'border-t border-border/50'
 								}`}
 							>
 								<div className='flex items-center space-x-2 mb-2'>
-									<Volume2 className='w-3 h-3 opacity-70' />
+									<Volume2 className='w-3 h-3 opacity-70 flex-shrink-0' />
 									<p
 										className={`text-xs font-medium ${
 											isCurrentUser ? 'text-blue-100' : 'text-muted-foreground'
@@ -177,11 +177,14 @@ const MessageBubble = memo(
 								</div>
 								<audio
 									controls
-									className={`w-full max-w-64 h-8 rounded-lg ${
+									className={`w-full max-w-[200px] sm:max-w-[250px] md:max-w-[300px] h-8 rounded-lg ${
 										isCurrentUser ? 'filter brightness-90' : ''
 									}`}
 								>
-									<source src={message.audioUrl} type='audio/mpeg' />
+									<source
+										src={`https://simpleai-ntj5.onrender.com${message.audioUrl}`}
+										type='audio/mpeg'
+									/>
 									Your browser does not support the audio element.
 								</audio>
 							</div>
@@ -193,7 +196,7 @@ const MessageBubble = memo(
 							isCurrentUser ? 'justify-end' : 'justify-start'
 						}`}
 					>
-						<Clock className='w-3 h-3 text-muted-foreground' />
+						<Clock className='w-3 h-3 text-muted-foreground flex-shrink-0' />
 						<span className='text-xs text-muted-foreground'>
 							{formatTime(message.timestamp)} • {message.type}
 						</span>
@@ -225,6 +228,7 @@ export default function ChatMessages({
 	const typingAvatarUrl = useMemo(() => {
 		return chatPartner.avatar
 	}, [chatPartner.avatar])
+
 	const groupedMessages = useMemo(() => {
 		const groups: { [key: string]: Message[] } = {}
 
@@ -257,38 +261,37 @@ export default function ChatMessages({
 			return 'Yesterday'
 		} else {
 			return date.toLocaleDateString('en-US', {
-				weekday: 'long',
-				year: 'numeric',
-				month: 'long',
+				weekday: 'short',
+				month: 'short',
 				day: 'numeric',
 			})
 		}
 	}
 
 	return (
-		<div className='h-full overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-background to-muted/20'>
+		<div className='h-full overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4 bg-gradient-to-b from-background to-muted/20'>
 			{messages.length === 0 ? (
-				<div className='flex items-center justify-center h-full'>
-					<div className='text-center space-y-4'>
+				<div className='flex items-center justify-center h-full px-4'>
+					<div className='text-center space-y-3 sm:space-y-4 max-w-md'>
 						<div className='relative'>
-							<div className='w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4'>
-								<MessageCircle className='w-10 h-10 text-white' />
+							<div className='w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4'>
+								<MessageCircle className='w-8 h-8 sm:w-10 sm:h-10 text-white' />
 							</div>
-							<div className='absolute -top-2 -right-2 w-8 h-8 bg-green-500 rounded-full animate-pulse'></div>
+							<div className='absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-6 h-6 sm:w-8 sm:h-8 bg-green-500 rounded-full animate-pulse'></div>
 						</div>
-						<p className='text-lg font-semibold text-foreground'>
+						<p className='text-base sm:text-lg font-semibold text-foreground'>
 							Start the conversation!
 						</p>
-						<p className='text-sm text-muted-foreground max-w-md'>
+						<p className='text-sm text-muted-foreground'>
 							Send your first message to begin chatting with translation support
 						</p>
 					</div>
 				</div>
 			) : (
 				Object.entries(groupedMessages).map(([dateString, dayMessages]) => (
-					<div key={dateString} className='space-y-4'>
-						<div className='flex items-center justify-center my-6'>
-							<div className='bg-muted/80 backdrop-blur-sm px-4 py-2 rounded-full'>
+					<div key={dateString} className='space-y-3 sm:space-y-4'>
+						<div className='flex items-center justify-center my-4 sm:my-6'>
+							<div className='bg-muted/80 backdrop-blur-sm px-3 py-1 sm:px-4 sm:py-2 rounded-full'>
 								<span className='text-xs font-medium text-muted-foreground'>
 									{formatDateHeader(dateString)}
 								</span>
@@ -308,19 +311,19 @@ export default function ChatMessages({
 			)}
 
 			{isTyping && (
-				<div className='flex items-start space-x-3 mb-6 animate-fade-in'>
+				<div className='flex items-start space-x-2 sm:space-x-3 mb-4 sm:mb-6 animate-fade-in'>
 					<div className='relative'>
-						<Avatar className='h-12 w-12 ring-2 ring-background shadow-lg'>
+						<Avatar className='h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 ring-2 ring-background shadow-lg'>
 							<AvatarImage src={typingAvatarUrl} />
-							<AvatarFallback className='bg-gradient-to-br from-green-500 to-emerald-600 text-white font-semibold'>
+							<AvatarFallback className='bg-gradient-to-br from-green-500 to-emerald-600 text-white font-semibold text-xs sm:text-sm'>
 								{chatPartner.name?.[0] || 'U'}
 								{chatPartner.surname?.[0] || ''}
 							</AvatarFallback>
 						</Avatar>
-						<div className='absolute -bottom-0 -right-0 w-4 h-4 bg-green-500 rounded-full border-2 border-background shadow-sm animate-pulse'></div>
+						<div className='absolute -bottom-0 -right-0 w-3 h-3 sm:w-4 sm:h-4 bg-green-500 rounded-full border-2 border-background shadow-sm animate-pulse'></div>
 					</div>
 
-					<Card className='bg-card border border-border/50 rounded-2xl px-4 py-3 shadow-md'>
+					<Card className='bg-card border border-border/50 rounded-2xl px-3 py-2 sm:px-4 sm:py-3 shadow-md'>
 						<div className='flex space-x-1'>
 							<div className='w-2 h-2 bg-muted-foreground rounded-full animate-bounce'></div>
 							<div

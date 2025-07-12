@@ -36,10 +36,8 @@ export default function ChatInput({ onSendMessage }: ChatInputProps) {
 		setIsSending(true)
 
 		try {
-			// Create audio file from blob if exists
 			let audioFile: File | undefined
 			if (audioBlob) {
-				// Use audio/webm or audio/wav based on browser support
 				const mimeType = audioBlob.type || 'audio/webm'
 				const extension = mimeType.includes('wav') ? 'wav' : 'webm'
 				
@@ -56,19 +54,16 @@ export default function ChatInput({ onSendMessage }: ChatInputProps) {
 				})
 			}
 
-			// Call the parent's onSendMessage with all necessary data
 			await onSendMessage({
 				text: newMessage.trim() || undefined,
 				audioFile,
 				sessionId: Number(sessionId)
 			})
 
-			// Clear form only after successful send
 			setNewMessage('')
 			deleteRecording()
 		} catch (error) {
 			console.error('Failed to send message:', error)
-			// Error handling is now done in the parent component
 		} finally {
 			setIsSending(false)
 		}
@@ -84,7 +79,6 @@ export default function ChatInput({ onSendMessage }: ChatInputProps) {
 		setIsSending(true)
 
 		try {
-			// Create audio file from blob
 			const mimeType = audioBlob.type || 'audio/webm'
 			const extension = mimeType.includes('wav') ? 'wav' : 'webm'
 			
@@ -99,17 +93,14 @@ export default function ChatInput({ onSendMessage }: ChatInputProps) {
 				sessionId: Number(sessionId)
 			})
 
-			// Call the parent's onSendMessage with audio data
 			await onSendMessage({
 				audioFile,
 				sessionId: Number(sessionId)
 			})
 
-			// Clear form only after successful send
 			deleteRecording()
 		} catch (error) {
 			console.error('Failed to send voice message:', error)
-			// Error handling is now done in the parent component
 		} finally {
 			setIsSending(false)
 		}
