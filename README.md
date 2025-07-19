@@ -8,7 +8,7 @@ Effortlessly start chat sessions using invite codes and communicate across langu
 
 ### 🔗 Live Demo
 
-👉 [talkbridge.uz](https://talkbridge.uz)
+👉 <a href="https://talkbridge.uz" target="_blank" rel="noopener noreferrer">talkbridge.uz</a>
 
 ### ⚙️ Tech Stack
 
