@@ -1,4 +1,4 @@
-# Simple AI
+## Simple AI
 
 **Simple AI** is a real-time voice and text chat app with **automatic language translation** — powered by **Gemini AI**.
 
@@ -6,19 +6,19 @@ Effortlessly start chat sessions using invite codes and communicate across langu
 
 ---
 
-### 🔗 Live Demo
+### Live Demo
 
-👉 <a href="https://talkbridge.uz" target="_blank" rel="noopener noreferrer">talkbridge.uz</a>
+<a href="https://talkbridge.uz" target="_blank" rel="noopener noreferrer">talkbridge.uz</a>
 
-### ⚙️ Tech Stack
+### Tech Stack
 
-- 🧠 **Gemini AI** – for language translation  
-- ⚡ **React + Vite + TypeScript** – fast, modern frontend  
-- 🎨 **shadcn/ui** – elegant, accessible UI components  
+- **Gemini AI** – for language translation  
+- **React + Vite + TypeScript** – fast, modern frontend  
+- **shadcn/ui** – elegant, accessible UI components  
 
 ---
 
-### 🚀 Features
+### Features
 
 - Real-time **voice & text chat**
 - **Auto-translation** between languages
